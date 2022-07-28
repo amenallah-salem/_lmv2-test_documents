@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Autorisation d'animer</title>
+	<meta charset="utf-8" name="viewport" content="width=device-width, user-scalable=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+	
+	<style>
+	    #drop-area {
+	        width: 70%;
+	        height: auto;
+	    }
+	    .fileinput-upload-button {
+	    	display: none;
+	    }
+	</style>
+	
+</head>
+<body>
+
+	<div class="container" style="margin: 50px">
+		<form action="https://recup4pointspermis.fr/dropzone/" method="post" enctype="multipart/form-data">
+			<div class="row d-flex align-items-center">
+				<div class="col-12 col-md-6">
+					<div id="drop-area">
+    		            <input id="input-id" type = "file" class="file" data-browse-on-zone-click ="true" name="doc-identite">
+                    </div>
+				</div>
+				<div class="col-12 col-md-6">
+					<div class="form-row">
+						<div class="form-group col-12">
+    						<label for="autorisation_animer">Numéro d'autorisation d'animer</label>
+    						<input type="text" class="form-control" id="autorisation_animer" placeholder="Numéro d'autorisation d'animer" name="autorisation_animer">
+  						</div>
+  						<div class="form-group col-12">
+    						<label for="date_delivrance">Date de délivrance</label>
+    						<input type="date" class="form-control" id="date_delivrance" name="date_delivrance">
+  						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Soumettre</button>
+				</div>
+			</div>
+  		</form>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script type="text/javascript">
+   
+   $(function(){
+       $(".file-drop-zone-title").text("Glissez et déposez votre document d'autorisation d'animer ou clickez pour en téléverser un");
+
+       $("button.close").click(function(){
+       		$(".file-drop-zone-title").text("Glissez et déposez votre document d'autorisation d'animer ou clickez pour en téléverser un");
+       });
+
+       $(".fileinput-remove-button").click(function(){
+       		$(".file-drop-zone-title").text("Glissez et déposez votre document d'autorisation d'animer ou clickez pour en téléverser un");
+       });
+   })
+		 
+</script>
+</body>
+</html>

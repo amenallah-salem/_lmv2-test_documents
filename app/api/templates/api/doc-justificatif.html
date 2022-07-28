@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Justificatif de domicile</title>
+	<meta charset="utf-8" name="viewport" content="width=device-width, user-scalable=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<style>
+	    #drop-area {
+	        width: 70%;
+	        height: auto;
+	    }
+	    .fileinput-upload-button {
+	    	display: none;
+	    }
+	</style>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$('#file').on('change', function() {   
+			  
+			   var fd = new FormData();
+			   console.log(fd)
+			   var files = $('#file')[0].files[0];
+			   console.log(files)
+			   fd.append('file',files); 
+		
+	   
+					  $.ajax({
+				   url: 'http://127.0.0.1:8000/extract/',
+				   type: 'post',
+				   data: fd,
+				   contentType: false,
+				   processData: false,
+				   dataType: "json",
+				   success: function(response){
+					   if(response != 0){
+						   console.log(response['data']['adresse'][0])
+						   $("#adr").attr('disabled', false);
+						   $("#vi").attr('disabled', false);
+						   $("#code_postal").attr('disabled', false);
+						   for (i = 0; i < response['data']['adresse'][0]['Adresse'].length; i++) {
+        
+		$("#adr").append('<option value=' + response['data']['adresse'][0]['Adresse'][i] + '>' + response['data']['adresse'][0]['Adresse'][i] + '</option>');
+		var elem = document.getElementById('adr');
+          elem.style.display = 'inline';
+    }
+	$('#adr').on('change', function() {  
+		var e = document.getElementById("adr");
+		var strUser = e.options[e.selectedIndex].text;
+		$('#adresse').val(strUser);
+	  
+		$('label[for=adresse]').show();
+	  
+		
+		 
+	})
+	for (i = 0; i < response['data']['adresse'][0]['Ville'].length; i++) {
+       
+		$("#vi").append('<option value=' + response['data']['adresse'][0]['Ville'][i] + '>' + response['data']['adresse'][0]['Ville'][i] + '</option>');
+		
+    }
+	var elem = document.getElementById('vi');
+          elem.style.display = 'inline';
+	$('#vi').on('change', function() {  
+		var e = document.getElementById("vi");
+		var strUser = e.options[e.selectedIndex].text;
+		$('#ville').val(strUser);
+	  
+		$('label[for=ville]').show();
+	  
+		
+		 
+	})
+	for (i = 0; i < response['data']['adresse'][0]['Code postal'].length; i++) {
+       
+	   $("#code").append('<option value=' + response['data']['adresse'][0]['Code postal'][i] + '>' + response['data']['adresse'][0]['Code postal'][i] + '</option>');
+	   
+   }
+   var elem = document.getElementById('code');
+          elem.style.display = 'inline';
+	$('#code').on('change', function() {  
+		var e = document.getElementById("code");
+		var strUser = e.options[e.selectedIndex].text;
+		$('#code_postal').val(strUser);
+	  
+		$('label[for=code_postal]').show();
+	  
+		
+		 
+	})
+
+					   }else{
+						   alert('file not uploaded');
+					   }
+				   },
+			   });
+		   });
+	   });
+	   
+		   </script>
+<script type="text/javascript">
+
+	
+
+	function hide(){
+		$('label[for=adresse]').hide();
+		$('label[for=ville]').hide();
+		$('label[for=code_postal]').hide();
+		
+		var elem = document.getElementById('adr');
+          elem.style.display = 'none';
+		  var elem = document.getElementById('vi');
+          elem.style.display = 'none';
+		  var elem = document.getElementById('code');
+          elem.style.display = 'none';
+		
+	}
+	function success(){
+	if(document.getElementById("adresse").value==="" || document.getElementById("ville").value===""  || document.getElementById("code_postal").value==="") { 
+            document.getElementById('button').disabled = true; 
+        } else { 
+            document.getElementById('button').disabled = false;
+        }
+	}
+</script>
+</head>
+</head>
+<body onload="hide()" >
+
+	<div class="container" style="margin: 50px">
+		<form action="https://recup4pointspermis.fr/dropzone/" method="post" enctype="multipart/form-data">
+			<div class="row d-flex align-items-center">
+				<div class="col-12 col-md-6">
+					<div id="drop-area">
+    		            <input id="file" type = "file" class="file" data-browse-on-zone-click ="true" name="doc-identite">
+                    </div>
+				</div>
+				<div class="col-12 col-md-6">
+					<div class="form-row">
+						<div class="form-group col-12">
+    						<label for="adr">Adresse</label>
+    						<select name="adr" id="adr">
+								<option value="">Choisissez Une Option Pour Votre Adresse</option>
+							
+							</select>
+  						</div>
+						<div class="form-group col-12">
+    						<label for="adresse">Confirmer votre adresse ici </label>
+    						<input type="text" class="form-control" onchange="success()" id="adresse" placeholder="Entrez votre adresse" name="adresse">
+  						</div>
+						  <div class="form-group col-12">
+    						<label for="vi">Ville</label>
+    						<select name="vi" id="vi">
+								<option value="">Choisissez Une Option Pour Votre Ville</option>
+							
+							</select>
+  						</div>
+  						<div class="form-group col-12">
+    						<label for="ville">Confirmer votre ville ici </label>
+    						<input type="text" class="form-control" id="ville" onchange="success()"  placeholder="Entrez votre ville" name="ville">
+  						</div>
+						  <div class="form-group col-12">
+    						<label for="code">Code postal</label>
+    						<select name="code" id="code">
+								<option value="">Choisissez Une Option Pour Votre Code Postal</option>
+							
+							</select>
+  						</div>
+  						<div class="form-group col-12">
+    						<label for="code_postal">Confirmer votre Code Postal ici</label>
+    						<input type="text" class="form-control" id="code_postal" onchange="success()" placeholder="Entrez votre code postal" name="code_postal">
+  						</div>
+					</div>
+					
+					<button type="submit" id="button" disabled class="btn btn-primary">Soumettre</button>
+				</div>
+			</div>
+  		</form>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script type="text/javascript">
+   
+   $(function(){
+       $(".file-drop-zone-title").text("Glissez et déposez votre justificatif de domicile ou clickez pour en téléverser un");
+
+       $("button.close").click(function(){
+       		$(".file-drop-zone-title").text("Glissez et déposez votre justificatif de domicile ou clickez pour en téléverser un");
+       });
+
+       $(".fileinput-remove-button").click(function(){
+       		$(".file-drop-zone-title").text("Glissez et déposez votre justificatif de domicile ou clickez pour en téléverser un");
+       });
+   })
+		 
+</script>
+</body>
+</html>

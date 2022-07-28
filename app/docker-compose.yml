@@ -1,0 +1,21 @@
+version: '3.6'
+services:
+  app:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile 
+    environment:
+      - ALLOWED_HOSTS=127.0.0.1,localhost   
+    command: bash -c "gunicorn app.wsgi --bind 0.0.0.0:8000 --timeout 300000"
+    container_name: app
+    image: app:latest
+    volumes:
+      - ./:/app
+      - /home/amen/.cache/huggingface/:/root/.cache/huggingface/
+    ports:
+      - '8000:8000'
+
+
+
+

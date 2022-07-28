@@ -1,0 +1,27 @@
+#hello from docker 
+transformers==4.19
+datasets==2.2.2
+seqeval
+PyPDF2==1.26.0 
+pdftotext 
+pdf2image 
+pdfplumber 
+pytesseract 
+Pillow==8.4.0
+tesserocr
+tokenizers==0.11.1 
+chardet  
+dateparser 
+unidecode
+Django==3.2.9 
+django-cors-headers==3.10.0 
+django-rest-framework==0.1.0 
+djoser==2.1.0 
+pyyaml==5.1 
+pandas==1.0.5 
+gunicorn
+Cython
+paddleocr==2.0.1
+langdetect
+nltk
+
